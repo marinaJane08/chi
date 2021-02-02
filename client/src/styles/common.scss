@@ -1,0 +1,96 @@
+@import '@/styles/sass-import-once';
+
+// 正方形
+@mixin square($width) {
+  width: $width;
+  height: 0;
+  padding-bottom: $width;
+}
+
+@include exports('common') {
+
+  // 宽度一半的正方形
+  .square-1_2 {
+    @include square(50%);
+  }
+
+  .square-1_4 {
+    @include square(25%);
+  }
+
+  .btn-space-lg {
+    &:not(:last-child) {
+      margin-right: 50px;
+    }
+  }
+
+  // tailwind.css
+
+  // 分割线
+  .divide-x {
+    :not(:first-child) {
+      border-left: 1px solid #e5e7eb;
+    }
+  }
+
+  .w-max {
+    width: max-content;
+  }
+
+  .whitespace-nowrap {
+    white-space: nowrap;
+  }
+
+  .flex {
+    display: flex
+  }
+
+  .block {
+    display: block
+  }
+
+  .rounded-full {
+    border-radius: 9999px
+  }
+
+  .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)
+  }
+
+  .max-w-full {
+    max-width: 100%
+  }
+
+  .bg-white {
+    background-color: #fff
+  }
+
+  .h-full {
+    height: 100%
+  }
+
+  .flex-col {
+    flex-direction: column
+  }
+
+  .overflow-hidden {
+    overflow: hidden
+  }
+
+  .overflow-auto {
+    overflow: auto
+  }
+
+  .fixed {
+    position: fixed
+  }
+
+  .inset-x-0 {
+    right: 0px;
+    left: 0px;
+  }
+
+  .bottom-1 {
+    bottom: 0.25rem
+  }
+}

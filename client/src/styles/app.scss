@@ -1,0 +1,16 @@
+// 第三方样式
+@import "~taro-ui/dist/style/components/button.scss";
+@import "~taro-ui/dist/style/components/badge.scss";
+@import "~taro-ui/dist/style/components/form.scss";
+@import "~taro-ui/dist/style/components/modal.scss";
+@import "~taro-ui/dist/style/components/progress.scss";
+//公共样式（全局只引入一次）
+// @import '@/styles/common';
+// 业务样式（要引用公共样式的组件在此处导入）
+@import '@/styles/pages/panel.scss';
+@import '@/styles/pages/me.scss';
+@import '@/styles/components/Tabs.scss';
+
+page {
+  height: 100%;
+}

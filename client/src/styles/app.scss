@@ -6,11 +6,18 @@
 @import "~taro-ui/dist/style/components/progress.scss";
 //公共样式（全局只引入一次）
 // @import '@/styles/common';
+@import '@/styles/pixel.scss';
 // 业务样式（要引用公共样式的组件在此处导入）
 @import '@/styles/pages/panel.scss';
 @import '@/styles/pages/me.scss';
 @import '@/styles/components/Tabs.scss';
 
+@font-face {
+  font-family: 'PressStart2P';
+  src: url('../assets/PressStart2P.woff2') format('woff2')
+}
+
 page {
   height: 100%;
+  font-family: "PressStart2P";
 }

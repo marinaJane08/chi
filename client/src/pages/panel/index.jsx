@@ -97,7 +97,7 @@ export default (props) => {
             : <View>
               {item.name}
               <Text>{item.category.name}</Text>
-              <Button>{item.status === 1 ? '去组队' : '去统一'}</Button>
+              <Button className="nes-btn">{item.status === 1 ? '去组队' : '去统一'}</Button>
             </View>
           }
         </View>

@@ -4,9 +4,10 @@
 @import "~taro-ui/dist/style/components/form.scss";
 @import "~taro-ui/dist/style/components/modal.scss";
 @import "~taro-ui/dist/style/components/progress.scss";
+@import "~taro-ui/dist/style/components/modal.scss";
 //公共样式（全局只引入一次）
 // @import '@/styles/common';
-@import '@/styles/pixel.scss';
+@import '@/styles/pixel/index.scss';
 // 业务样式（要引用公共样式的组件在此处导入）
 @import '@/styles/pages/panel.scss';
 @import '@/styles/pages/me.scss';

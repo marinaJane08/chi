@@ -1,9 +1,8 @@
 export default {
   pages: [
+    'pages/tree/index',//「🌲」
     'pages/panel/index',//「面板」
     'pages/panel/unified/index',//统一仓库
-    'pages/relation/index',//「首页」
-    'pages/me/index',//「我」
     'pages/login/index',//登录
   ],
   window: {
@@ -18,9 +17,9 @@ export default {
     // "color": "#7A7E83",
     // "selectedColor": "#3cc51f",
     list: [
+      { pagePath: 'pages/tree/index', text: '🌲' },
       { pagePath: 'pages/panel/index', text: '面板' },
-      { pagePath: 'pages/relation/index', text: '首页' },
-      { pagePath: 'pages/me/index', text: '我' },
+      { pagePath: 'pages/login/index', text: '我' },
     ]
   }
 }

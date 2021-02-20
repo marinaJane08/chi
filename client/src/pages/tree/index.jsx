@@ -13,7 +13,7 @@ export default (props) => {
     <AtModal isOpened>
       <AtModalHeader>╰(*°▽°*)╯</AtModalHeader>
       <AtModalContent>Hi！你看起来是第一次来呢，你想获得哪种快乐呢？</AtModalContent>
-      <View><Button>🍉丰收</Button><Button className="nes-btn is-primary" hoverClass="nes-btn-active">🐷金币</Button></View>
+      <View><AtButton>🍉丰收</AtButton><AtButton>🐷金币</AtButton></View>
       <Text>老用户跳过</Text>
     </AtModal>
   </View>

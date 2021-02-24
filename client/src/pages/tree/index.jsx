@@ -1,91 +1,92 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Taro, { useShareAppMessage, useRouter } from '@tarojs/taro';
-import { View, Text, Button, Form } from '@tarojs/components';
+import { View, Form, Text, Input, Button } from '@tarojs/components';
 import { AtButton, AtInput, AtFab, AtIcon, AtBadge, AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui';
+import { useForm, useField, Field } from '@/components/HookForm';
 import { useRedux } from '@/reducer';
-import { useForm, useField, FormField } from '@/components/FormWidget';
 import consts from '@/const';
 
 const log = console.log;
 
-const TaskList = ({ list = [], setShowTaskRecord = () => { } }) => {
-  const [showTask, setShowTask] = useState(false);
-  const hideTaskModal = () => {
-    setShowTask(false);
-  }
-  const taskForm = useForm({
+const TaskForm = ({ defaultValues, hide }) => {
+  // 使用useForm hooks创建实例
+  const form = useForm({
+    // 传入onSubmit接收校验结果和表单数据
     onSubmit: async (formData, valid) => {
-      // 更新任务
       if (!valid) return;
-      await timeout(2000); // 模拟网络延迟
-      if (formData.username.length < 10) {
+      if (formData.task_name.length < 10) {
         //模拟服务端返回 400
-        usernameField.setErrors(["Make a longer username"]);
+        usernameField.setErrors(["Make a longer task_name"]);
       } else {
         //模拟服务端返回 201
-        window.alert(
-          `taskForm valid: ${valid}, taskForm data: ${JSON.stringify(formData)}`
+        console.log(
+          `form valid: ${valid}, form data: ${JSON.stringify(formData)}`
         );
-        hideTaskModal();
+        hide();
       }
     }
   });
-  const tasknameField = useField("task_name", taskForm, {
-    defaultValue: showTask.task_name,
+
+  // useField接收字段name和form实例，传入初始值和rules，以及当值发生改变时需要校验的其他字段
+  const usernameField = useField("task_name", form, {
+    defaultValue: defaultValues.task_name,
     validations: [
       async formData => {
-        await timeout(2000);
         return formData.task_name.length < 6 && "Username already exists";
       }
     ],
     fieldsToValidateOnChange: []
   });
-  let requiredFields = [tasknameField];
+  return <AtModal isOpened={true}>
+    <Form onSubmit={form.onSubmit}>
+      <AtModalHeader>任务</AtModalHeader>
+      <AtModalContent>
+        <Field field={usernameField} form={form}>
+          <AtInput
+            title="任务名"
+            type='text'
+          />
+        </Field>
+        {/* <HeroForm.Item name='respect_gold'>
+            <AtInput
+              title='预期得'
+              type='text'
+            >金币/金豆</AtInput>
+          </HeroForm.Item> */}
+      </AtModalContent>
+      <AtModalAction>
+        <AtButton onClick={hide}>取消</AtButton>
+        <Button formType='submit'>提交</Button>
+      </AtModalAction>
+    </Form>
+  </AtModal>
+}
+
+const TaskList = ({ list = [], setShowTaskRecord = () => { } }) => {
+  const [showTask, setShowTask] = useState(false);
+  const [taskValues, setTaskValues] = useState({});
+  const hideTaskModal = () => {
+    setTaskValues({});
+    setShowTask(false);
+  }
+  const showTaskModal = (data) => {
+    setTaskValues(data);
+    setShowTask(true);
+  }
   return <View className="TaskList">
     {
       list.map((item, index) => {
         // 长按显示任务弹窗
         return <View
           key={index}
-          onClick={setShowTaskRecord.bind(null, item)}
-          onLongPress={setShowTask.bind(null, item)}
+          onClick={showTaskModal.bind(null, item)}
+        // onLongPress={showTaskModal.bind(null, item)}
         >{item.task_name}</View>
       })
     }
     <AtButton onClick={setShowTask.bind(null, {})}>+</AtButton>
     {/* 任务表单 */}
-    <AtModal isOpened={showTask}>
-      <Form onSubmit={e => taskForm.onSubmit(e.detail)}>
-        <AtModalHeader>任务</AtModalHeader>
-        <AtModalContent>
-          <FormField
-            {...tasknameField}
-            Widget={AtInput}
-            formSubmitted={taskForm.submitted}
-            title="任务名"
-            type='text'
-          />
-          <AtInput
-            name='respect_gold'
-            title='预期得'
-            type='text'
-            value={showTask.respect_gold}
-          >金币/金豆</AtInput>
-        </AtModalContent>
-        <AtModalAction>
-          <Button onClick={hideTaskModal}>取消</Button>
-          <Button
-            formType='submit'
-            disabled={
-              !taskForm.isValid() ||
-              taskForm.submitting ||
-              requiredFields.some(f => f.pristine)
-            }
-            loading={taskForm.submitting}
-          >提交</Button>
-        </AtModalAction>
-      </Form>
-    </AtModal>
+    {showTask && <TaskForm defaultValues={taskValues} hide={hideTaskModal} />}
   </View>
 }
 
@@ -100,7 +101,7 @@ export default (props) => {
     hideTaskRecordModal();
   }
   return <View className="">
-    <TaskList list={[{ task_name: '健康餐' }]} setShowTaskRecord={setShowTaskRecord} />
+    <TaskList list={[{ task_name: '健康餐', respect_gold: '2' }]} setShowTaskRecord={setShowTaskRecord} />
     {/* <AtModal isOpened>
       <AtModalHeader>╰(*°▽°*)╯</AtModalHeader>
       <AtModalContent>Hi！你看起来是第一次来呢，你想获得哪种快乐呢？</AtModalContent>

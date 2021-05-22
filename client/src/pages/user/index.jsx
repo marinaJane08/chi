@@ -17,6 +17,30 @@ export default (props) => {
       }
     });
   }
+  const watcher = useRef();
+  // useEffect(() => {
+  //   // 监听数据库实时变化
+  //   const db = Taro.cloud.database();
+  //   watcher.current = db.collection('todos')
+  //     .where({
+  //       team: 'our dev team'
+  //     })
+  //     .watch({
+  //       onChange: function (snapshot) {
+  //         console.log('docs\'s changed events', snapshot.docChanges)
+  //         console.log('query result snapshot after the event', snapshot.docs)
+  //         console.log('is init data', snapshot.type === 'init')
+  //       },
+  //       onError: function (err) {
+  //         console.error('the watch closed because of error', err)
+  //       }
+  //     });
+  //   return () => {
+  //     // 关闭监听
+  //     log('关闭watcher')
+  //     watcher.current.close();
+  //   }
+  // }, []);
   useEffect(() => {
     let params = Taro.getCurrentInstance().router.params;
     // sendMsg(params);
